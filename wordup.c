@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-//ERRORS
-//The code is making all of the letters say its correct but in the wrong position
-//even though some of the words listed isnt in the word the user entered
-
-// i need to see a example code to see how to detect how many letters the user entered
-
 void randomwords(FILE *inFile){
 	inFile = fopen("word.txt","w");
 	
@@ -73,7 +67,6 @@ void compareletters(FILE  *inFile, char userguess[], int *correct){
 
 void reset_game(FILE **inFile, int *chances, int *dischance, int *correct) {
     *chances = 0;
-    *dischance = 5;
     *correct = 0;
 }
 
@@ -114,20 +107,20 @@ int main(){
     while (userguess[count] != '\0') {
     //tests if the user enters a letter or puncuation mark
         if (userguess[count] < 'a' || userguess[count] > 'z') {
-        	//ends game if the word is invalid
-        	printf("No caps or puncuation allowed\n");
-        	reset_game(&inFile, &chances, &dischance, &correct);
+        	valid = 0;
         	break;
         }
-        
-        //tests if the count is lower than 5 then ends the program if true
-        if(count < 5){
-        printf("You cant have a word less than 5 letters\n");
-        reset_game(&inFile, &chances, &dischance, &correct);
-        break;
-        }
         count++;
-    }
+}
+        //tests if the count is lower than 5 then ends the program if true
+        if(count != 5){
+        valid = 0;
+        }
+        
+        if(!valid){
+        	printf("Invalid word, you must have 5 lower case letters.\n");
+        	continue;
+        }
 	//prints how many chances the user has left
 	printf("count: %d\n", count);
 	
